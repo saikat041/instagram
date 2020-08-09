@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // MUI 
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // components
 import home from './pages/home'
