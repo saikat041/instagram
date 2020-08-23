@@ -36,7 +36,13 @@ function validateSigninData(data){
     return { }
 
 }
+
+function join(...arr){
+    return arr.join(' ');
+}
+
 module.exports = {
     validateSignupData,
-    validateSigninData
+    validateSigninData,
+    join
 }

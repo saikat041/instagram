@@ -1,3 +1,9 @@
 body{
     background: #fafafa;
+    font-size: 15px;
+    color: "#262626";
 }
+
+.hideScrollbar::-webkit-scrollbar {
+    display: none;
+  }

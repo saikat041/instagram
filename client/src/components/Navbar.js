@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,6 +31,9 @@ const useStyles = makeStyles({
     icons: {
         fontSize: 30,
         marginLeft: 15
+    },
+    link: {
+        textDecoration: "none"
     }
 });
 
@@ -40,12 +44,12 @@ export default function Navbar() {
         <div className={classes.container}>
             <div className={classes.navbar}>
 
-                <Grid container spacing={1} className={classes.form}>
+                <Grid container spacing={1}>
 
                     <Grid item sm={3} />
 
                     <Grid item sm>
-                        <img alt="Instagram" src="instagram.png" style={{ objectFit: 'cover' }}></img>
+                        <Link to="/"> <img alt="Instagram" src="instagram.png" style={{ objectFit: 'cover' }}></img> </Link>
                     </Grid>
 
                     <Grid item sm >
