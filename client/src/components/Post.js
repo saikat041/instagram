@@ -26,8 +26,8 @@ const useStyles = makeStyles({
         alignItems: 'center'
     },
     avatar: {
-        width: 32,
-        height: 32
+        width: 30,
+        height: 30
     },
     img: {
         objectFit: 'cover',
@@ -121,7 +121,7 @@ export default function Post(props) {
             </div>
 
             <div>
-                <img className={classes.img} src={post.img} />
+                <img alt="Post" src={post.img} className={classes.img}  />
             </div>
 
             <div style={{ padding: "12px 12px 0px 12px" }}>
@@ -170,11 +170,11 @@ export default function Post(props) {
             {/* Comment Box */}
             <Grid container>
                 <Grid item sm={10}>
-                    <input class={classes.input} placeholder="Add a comment..." onChange={handleCommentPost}></input>
+                    <input className={classes.input} placeholder="Add a comment..." onChange={handleCommentPost}></input>
                 </Grid>
 
                 <Grid item sm={2}>
-                    <Button color="primary" disabled={newComment.trim().length == 0} className={classes.postButton}>Post</Button>
+                    <Button color="primary" disabled={newComment.trim().length === 0} className={classes.postButton}>Post</Button>
                 </Grid>
             </Grid>
 

@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
-import HomeIcon from '@material-ui/icons/Home';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonIcon from '@material-ui/icons/Person';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import Avatar from '@material-ui/core/Avatar';
 
 
 const useStyles = makeStyles({
@@ -34,7 +35,13 @@ const useStyles = makeStyles({
     },
     link: {
         textDecoration: "none"
-    }
+    },
+    avatar: {
+        width: 30,
+        height: 30,
+        display: "inline-block",
+        marginLeft: 15
+    },
 });
 
 export default function Navbar() {
@@ -57,9 +64,10 @@ export default function Navbar() {
                     </Grid>
 
                     <Grid item sm >
-                        <HomeIcon className={classes.icons} />
-                        <FavoriteIcon className={classes.icons} />
-                        <PersonIcon className={classes.icons} />
+                        <PostAddIcon className={classes.icons}/>
+                        <HomeOutlinedIcon className={classes.icons} />
+                        <FavoriteBorderOutlinedIcon className={classes.icons} />
+                        <Avatar alt="Profile Image" src="/profile.JPG" className={classes.avatar}/>
                     </Grid>
 
                     <Grid item sm={2}>
