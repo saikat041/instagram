@@ -22,14 +22,14 @@ const theme = createMuiTheme({
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-    <Router>
-      <Switch>
-      <Route exact path="/" component={home} />
-      <Route exact path="/login" component={login} />
-      <Route exact path="/signup" component={signup} />
-      </Switch>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={home} />
+          <Route exact path="/login" component={login} />
+          <Route exact path="/signup" component={signup} />
+        </Switch>
 
-    </Router>
+      </Router>
     </MuiThemeProvider>
   );
 }

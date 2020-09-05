@@ -44,8 +44,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Navbar() {
+export default function Navbar(props) {
     const classes = useStyles()
+
+    function _handledAddPostClick(){
+        props.openAddPostModal()
+    }
 
     return (
         <div className={classes.container}>
@@ -64,7 +68,7 @@ export default function Navbar() {
                     </Grid>
 
                     <Grid item sm >
-                        <PostAddIcon className={classes.icons}/>
+                        <PostAddIcon className={classes.icons} onClick={_handledAddPostClick}/>
                         <HomeOutlinedIcon className={classes.icons} />
                         <FavoriteBorderOutlinedIcon className={classes.icons} />
                         <Avatar alt="Profile Image" src="/profile.JPG" className={classes.avatar}/>
