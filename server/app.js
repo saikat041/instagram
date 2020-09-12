@@ -8,7 +8,9 @@ const authRouter = require('./routes/auth')
 const profileRouter = require('./routes/profile')
 const postRouter = require('./routes/post')
 
+const jwt = require('jsonwebtoken');
 const PORT = 4000
+const JWT_SECRET = 'My Secret';
 
 
 // initialize firbase admin
@@ -41,11 +43,19 @@ mongoose.connection.on('error', err => {
 app.use(express.json());
 app.use(cookieParser())
 
+function checkAuth(req, res, next) {
+    try {
+        jwt.verify(req.cookies.token || '', JWT_SECRET);
+    } catch (err) {
+        return res.status(401).send('Unauthorized request')
+    }
+    next()
+}
 
 // routers
 app.use('/api/auth', authRouter);
-app.use('/api/profile', profileRouter);
-app.use('/api/posts', postRouter);
+app.use('/api/profile', checkAuth, profileRouter);
+app.use('/api/posts', checkAuth, postRouter);
 
 
 // An endpoint for uploading image it returns the url
@@ -60,11 +70,11 @@ app.post('/api/uploadImage', function (req, res) {
         })
         blobStream.on('finish', () => {
             let publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-            res.send({publicUrl})
+            res.send({ publicUrl })
         })
-        .on('error', () => {
-            res.send({error: "Error in uploading"})
-        })
+            .on('error', () => {
+                res.send({ error: "Error in uploading" })
+            })
 
         file.pipe(blobStream)
     });

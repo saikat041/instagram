@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
@@ -55,7 +56,7 @@ router.post('/signin', async function(req, res, next){
         if (!passwordMatched){
             return res.status(400).send('Email or password is incorrect');
         }
-        const token = jwt.sign({userId: user._id}, JWT_SECRET, {expiresIn:'30s'});
+        const token = jwt.sign({userId: user._id}, JWT_SECRET, {expiresIn: '1000s'});
         res.cookie('token', token);
         res.send(token);
 
@@ -63,6 +64,15 @@ router.post('/signin', async function(req, res, next){
         return next(err)
     }
 
+});
+
+router.post('/signout', async function(req, res, next){
+    try{
+        res.clearCookie('token');
+        res.send("Signed out succesfully");
+    }catch(err){
+        return next(err)
+    }
 });
 
 module.exports = router
