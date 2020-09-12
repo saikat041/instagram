@@ -6,6 +6,7 @@ const Busboy = require('busboy');
 
 const authRouter = require('./routes/auth')
 const profileRouter = require('./routes/profile')
+const postRouter = require('./routes/post')
 
 const PORT = 4000
 
@@ -44,6 +45,7 @@ app.use(cookieParser())
 // routers
 app.use('/api/auth', authRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/posts', postRouter);
 
 
 // An endpoint for uploading image it returns the url
