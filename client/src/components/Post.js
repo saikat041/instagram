@@ -75,32 +75,11 @@ const useStyles = makeStyles({
 
 export default function Post(props) {
     const classes = useStyles();
-
-    // hard coded data to be fetched from server
-    const post = {
-        userName: "saikat041",
-        user: {
-            userName: "saikat041",
-            profileImage: "/profile.JPG"
-        },
-        liked: true,
-        img: "test.JPG",
-        psotMessage: "This is my first post",
-        comments: [
-            {
-                userName: "sahil",
-                text: "Nice photo"
-            },
-            {
-                userName: "sahil",
-                text: "Nice photo"
-            }
-        ],
-    }
+    const { post } = props;
 
     const [liked, setLiked] = useState(post.liked);
-    const [comments, setComments] = useState(post.comments)
-    const [newComment, setNewComment] = useState("")
+    const [comments, setComments] = useState(post.comments);
+    const [newComment, setNewComment] = useState("");
 
     function handleLike() {
         setLiked(!liked)
@@ -121,7 +100,7 @@ export default function Post(props) {
             </div>
 
             <div>
-                <img alt="Post" src={post.img} className={classes.img}  />
+                <img alt="Post" src={post.img} className={classes.img} />
             </div>
 
             <div style={{ padding: "12px 12px 0px 12px" }}>
@@ -143,14 +122,14 @@ export default function Post(props) {
 
                 {/* Post Message */}
                 <div style={{ marginBottom: 7 }}>
-                    <span className={classes.bold}>{props.userName}</span> {post.postMessage}
+                    <span className={classes.bold}>{props.userName}</span> {post.caption}
                 </div>
 
                 {/* Comments */}
                 <div className={join(classes.comments, 'hideScrollbar')}>
                     {
                         comments.map((comment) => (
-                            <div>
+                            <div key={comment.id}>
                                 <Link className={join(classes.link, classes.bold)} to={`/${comment.userName}`}> {comment.userName} </Link>
                                 {comment.text}
                             </div>

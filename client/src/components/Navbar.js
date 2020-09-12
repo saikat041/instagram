@@ -7,8 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import PersonOutlineRoundedIcon from '@material-ui/icons/PersonOutlineRounded'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Avatar from '@material-ui/core/Avatar';
+import Popover from '@material-ui/core/Popover';
 
+import { join } from "../utils"
+
+const axios = require('axios');
 
 const useStyles = makeStyles({
     container: {
@@ -30,7 +37,7 @@ const useStyles = makeStyles({
         color: 'rgb(38, 38, 38)'
     },
     icons: {
-        fontSize: 30,
+        fontSize: 26,
         marginLeft: 15
     },
     link: {
@@ -42,13 +49,42 @@ const useStyles = makeStyles({
         display: "inline-block",
         marginLeft: 15
     },
+    listItem: {
+        textDecoration: "none",
+        display: "flex",
+        padding: 10,
+        color: "black",
+        alignItems: "center",
+        "&:hover": {
+            background: "#fafafa"
+        }
+    },
+    clickable: {
+        cursor: "pointer"
+    }
 });
 
 export default function Navbar(props) {
     const classes = useStyles()
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
-    function _handledAddPostClick(){
+    function _handleProfileClick(event) {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    function _handledAddPostClick() {
         props.openAddPostModal()
+    }
+
+    function _handleLogoutClick(event) {
+        axios.post('/api/auth/signout');
+        props.history.push("/login");
     }
 
     return (
@@ -68,10 +104,16 @@ export default function Navbar(props) {
                     </Grid>
 
                     <Grid item sm >
-                        <PostAddIcon className={classes.icons} onClick={_handledAddPostClick}/>
-                        <HomeOutlinedIcon className={classes.icons} />
-                        <FavoriteBorderOutlinedIcon className={classes.icons} />
-                        <Avatar alt="Profile Image" src="/profile.JPG" className={classes.avatar}/>
+                        <PostAddIcon className={join(classes.clickable, classes.icons)} onClick={_handledAddPostClick} />
+                        <HomeOutlinedIcon className={join(classes.clickable, classes.icons)} />
+                        <FavoriteBorderOutlinedIcon className={join(classes.clickable, classes.icons)} />
+                        <Avatar
+                            alt="Profile Image"
+                            src="/profile.JPG"
+                            className={join(classes.clickable, classes.avatar, classes.iconFontSize)}
+                            style={{ width: 26, height: 26 }}
+                            onClick={_handleProfileClick}
+                        />
                     </Grid>
 
                     <Grid item sm={2}>
@@ -79,9 +121,37 @@ export default function Navbar(props) {
                     </Grid>
 
                 </Grid>
-
             </div>
 
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+            >
+                <div style={{ width: 200, borderRadius: 10 }}>
+                    <Link className={classes.listItem} to="/profile">
+                        <PersonOutlineRoundedIcon style={{ fontSize: 20 }} />  <span style={{ marginLeft: 10 }}>Profile</span>
+                    </Link>
+
+                    <Link className={classes.listItem} to="/setting">
+                        <SettingsOutlinedIcon style={{ fontSize: 20 }} />  <span style={{ marginLeft: 10 }}>Setting</span>
+                    </Link>
+
+                    <div className={join(classes.listItem, classes.clickable)} onClick={_handleLogoutClick}>
+                        <ExitToAppIcon style={{ fontSize: 20 }} />  <span style={{ marginLeft: 10 }}>Logout</span>
+                    </div>
+                </div>
+
+            </Popover>
 
         </div>)
 }
