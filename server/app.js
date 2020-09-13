@@ -24,7 +24,7 @@ const bucket = admin.storage().bucket();
 
 
 // database connection
-mongoose.connect("mongodb+srv://admin:admin@cluster0.kepi8.mongodb.net/<dbname>?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }).
+mongoose.connect("mongodb+srv://admin:admin@cluster0.kepi8.mongodb.net/instagram?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }).
     then(() => {
         console.log("Connected to database")
     }).

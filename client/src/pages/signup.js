@@ -36,6 +36,7 @@ function SignUp(props) {
 
     const classes = useStyles();
     const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -48,6 +49,9 @@ function SignUp(props) {
         switch(e.target.name){
             case 'name':
                 setName(value);
+                break;
+            case 'username':
+                setUsername(value);
                 break;
             case 'email':
                 setEmail(value);
@@ -76,6 +80,7 @@ function SignUp(props) {
         axios.post('/api/auth/signup', 
         {
             name,
+            username,
             email,
             password
         }
@@ -99,6 +104,7 @@ function SignUp(props) {
                 <Grid item sm>
                     <Typography variant="h4">SignUp</Typography>
                     <TextField label="Name" name="name" type="text" fullWidth onChange={onChange}/>
+                    <TextField label="Username" name="username" type="text" fullWidth onChange={onChange}/>
                     <TextField label="Email" name="email" type="email" fullWidth onChange={onChange}/>
                     <TextField label="Password" name="password" type="password" fullWidth onChange={onChange}/>
                     <TextField label="Confirm Password" name="confirmPassword" type="password" fullWidth onChange={onChange}/>

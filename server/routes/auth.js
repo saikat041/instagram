@@ -12,19 +12,24 @@ const {signupSchema, signinSchema} = require('../validation/validation')
 
 router.post('/signup', async function(req, res, next){
     try{
-        const {name, email, password} = req.body
-        const {error} = signupSchema.validate({name, email, password})
+        const {name, username, email, password} = req.body
+        const {error} = signupSchema.validate({name, username, email, password})
     
         if(error){
             return res.status(400).send(error.details[0].message)
         }
-    
-        const user = new User({name, email, password: bcrypt.hashSync(password, salt)})
+
+        const usernameExists = await User.findOne({username});
+        if(usernameExists){
+            return res.status(400).send("Username already exists");
+        }
+
         const emailExists = await User.findOne({email})
         if (emailExists){
             return res.status(400).send("Email already exists");
         }
-    
+
+        const user = new User({name, email, password: bcrypt.hashSync(password, salt)})
         const savedUser = await user.save();
         const token = jwt.sign({userId: savedUser._id}, JWT_SECRET, {expiresIn:'1m'});
         res.cookie('token', token);
@@ -38,8 +43,8 @@ router.post('/signup', async function(req, res, next){
 
 router.post('/signin', async function(req, res, next){
     try{
-        const {email, password} = req.body
-        const {error} = signinSchema.validate({email, password})
+        const {username, password} = req.body
+        const {error} = signinSchema.validate({username, password})
     
         if (error){
             return res.status(400).send(error.details[0].message)
