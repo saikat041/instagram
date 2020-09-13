@@ -5,6 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+const axios = require('axios');
 
 const useStyles = makeStyles({
     container: {
@@ -44,7 +45,7 @@ export default function NewPost(props) {
     const [file, setFile] = useState('')
     const [imageInputValue, setImageInputValue] = useState('')
     const [imagePreviewUrl, setImagePreviewUrl] = useState(null)
-    const [cpation, setCaption] = useState('')
+    const [caption, setCaption] = useState('')
 
     function _handleImageChange(e) {
         let reader = new FileReader()
@@ -56,6 +57,7 @@ export default function NewPost(props) {
             setFile(file);
             setImagePreviewUrl(reader.result)
         }
+        // this reads the image binary and converts it into base64
         reader.readAsDataURL(file)
     }
 
@@ -71,6 +73,26 @@ export default function NewPost(props) {
 
     function _handleCancelClick() {
         props.toggleModal(false)
+    }
+
+    function _handlePostClick() {
+        var form = new FormData()
+        form.append('file', file)
+        console.log(form)
+        axios.post('/api/uploadImage', form, { headers: {"Content-Type": "multipart/form-data"} })
+        .then(function(response) {
+            const imageUrl = response.data.publicUrl
+            const newPost = {caption, imageUrl}
+            return axios.post('/api/posts', newPost)
+        })
+        .then(function(response){
+            console.log(response.data)
+            props.toggleModal(false)
+        })
+        .catch(function(err) {
+            console.log(err)
+        })
+        
     }
 
     return (
@@ -97,10 +119,10 @@ export default function NewPost(props) {
                 onChange={_handleCaptionChange}
             />
 
-            <div style={{textAlign:"right"}}>
+            <div style={{ textAlign: "right" }}>
 
                 <Button variant="outlined" color="secondary" style={{ margin: '10px 5px' }} onClick={_handleCancelClick}> Cancel </Button>
-                <Button variant="contained" color='primary' style={{ margin: '10px 5px' }}> Post </Button>
+                <Button variant="contained" color='primary' style={{ margin: '10px 5px' }} onClick={_handlePostClick}> Post </Button>
 
             </div>
 

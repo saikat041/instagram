@@ -68,12 +68,14 @@ app.post('/api/uploadImage', function (req, res) {
         const blobStream = blob.createWriteStream({
             resumable: false
         })
-        blobStream.on('finish', () => {
-            let publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-            res.send({ publicUrl })
-        })
+
+        blobStream
+            .on('finish', () => {
+                let publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+                res.send({ publicUrl })
+            })
             .on('error', () => {
-                res.send({ error: "Error in uploading" })
+                res.status(500).send({ error: "Error in uploading to gcp server" })
             })
 
         file.pipe(blobStream)
