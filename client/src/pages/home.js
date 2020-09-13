@@ -36,15 +36,14 @@ function Home(props) {
             })
     }
 
-
-    function _openAddPostModal() {
-        setOpen(true)
+    function _toggleModal(open) {
+        setOpen(open)
     }
 
     return (
         <div>
             <div>
-                <Navbar history={props.history} openAddPostModal={_openAddPostModal} />
+                <Navbar history={props.history} toggleModal={_toggleModal} />
             </div>
 
             <Grid container>
@@ -60,7 +59,7 @@ function Home(props) {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
-                <CreatePost />
+                <CreatePost toggleModal={_toggleModal}/>
             </Modal>
         </div>
     )

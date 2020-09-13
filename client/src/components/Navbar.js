@@ -79,7 +79,7 @@ export default function Navbar(props) {
     };
 
     function _handledAddPostClick() {
-        props.openAddPostModal()
+        props.toggleModal(true)
     }
 
     function _handleLogoutClick(event) {

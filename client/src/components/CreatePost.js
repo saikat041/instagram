@@ -34,7 +34,7 @@ const useStyles = makeStyles({
         color: 'grey'
     },
     caption: {
-        marginTop:-5
+        marginTop: -5
     }
 });
 
@@ -59,7 +59,7 @@ export default function NewPost(props) {
         reader.readAsDataURL(file)
     }
 
-    function _handleCaptionChange(e){
+    function _handleCaptionChange(e) {
         e.preventDefault()
         setCaption(e.target.value)
     }
@@ -67,6 +67,10 @@ export default function NewPost(props) {
     function _handleRemove(e) {
         setImagePreviewUrl('')
         setImageInputValue('')
+    }
+
+    function _handleCancelClick() {
+        props.toggleModal(false)
     }
 
     return (
@@ -79,7 +83,7 @@ export default function NewPost(props) {
                 {
                     imagePreviewUrl ?
                         <img src={imagePreviewUrl} className={classes.img} /> :
-                        <input type="file" value={setImageInputValue} onChange={_handleImageChange} style={{marginTop:50}}/>
+                        <input type="file" value={setImageInputValue} onChange={_handleImageChange} style={{ marginTop: 50 }} />
                 }
             </div>
 
@@ -93,7 +97,14 @@ export default function NewPost(props) {
                 onChange={_handleCaptionChange}
             />
 
-            <Button variant='contained' color='primary' style={{margin:'10px 0px'}}> Post </Button>
+            <div style={{textAlign:"right"}}>
+
+                <Button variant="outlined" color="secondary" style={{ margin: '10px 5px' }} onClick={_handleCancelClick}> Cancel </Button>
+                <Button variant="contained" color='primary' style={{ margin: '10px 5px' }}> Post </Button>
+
+            </div>
+
+
 
         </div>)
 }
