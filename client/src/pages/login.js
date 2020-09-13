@@ -40,7 +40,7 @@ function Login(props) {
     const classes = useStyles();
 
     // states
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -48,8 +48,8 @@ function Login(props) {
     function onChange(e){
         const value = e.target.value
         switch(e.target.name){
-            case 'email':
-                setEmail(value);
+            case 'username':
+                setUsername(value);
                 break
             case 'password':
                 setPassword(value);
@@ -60,7 +60,7 @@ function Login(props) {
 
     function onClick() {
 
-        const {error} = validateSigninData({email, password});
+        const {error} = validateSigninData({username, password});
 
         if (error){
             return setError(error)
@@ -68,7 +68,7 @@ function Login(props) {
 
         setLoading(true)
         axios.post('/api/auth/signin', {
-            email,
+            username,
             password
         })
         .then(function(res){
@@ -89,7 +89,7 @@ function Login(props) {
                     <Grid item sm>
                         <Typography variant="h4">Login</Typography>
 
-                        <TextField label="Email" name="email" type="email" fullWidth onChange={onChange} />
+                        <TextField label="Username" name="username" type="text" fullWidth onChange={onChange} />
                         <TextField label="Password" name="password" type="password" fullWidth onChange={onChange} />
                         
                         {error && (<Typography className={classes.customError}>{error}</Typography>)}

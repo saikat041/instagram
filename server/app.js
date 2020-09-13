@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -9,11 +10,12 @@ const profileRouter = require('./routes/profile')
 const postRouter = require('./routes/post')
 
 const jwt = require('jsonwebtoken');
-const PORT = 4000
-const JWT_SECRET = 'My Secret';
 
+const PORT = process.env.PORT
+const JWT_SECRET = process.env.JWT_SECRET
+const DB_URL = process.env.DB_URL
 
-// initialize firbase admin
+// initialize firbase admin, we are using firebase only for storing image data
 const admin = require("firebase-admin");
 const serviceAccount = require("/home/saikat/Projects/serviceAccountKey.json");
 admin.initializeApp({
@@ -24,7 +26,7 @@ const bucket = admin.storage().bucket();
 
 
 // database connection
-mongoose.connect("mongodb+srv://admin:admin@cluster0.kepi8.mongodb.net/instagram?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }).
+mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).
     then(() => {
         console.log("Connected to database")
     }).

@@ -70,7 +70,7 @@ function SignUp(props) {
 
     function onSignup(){ 
 
-        const {error} = validateSignupData({name, email, password, confirmPassword})
+        const {error} = validateSignupData({name, username, email, password, confirmPassword})
 
         if (error){ 
             return setError(error)

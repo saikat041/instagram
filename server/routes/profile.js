@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/User')
 
-const JWT_SECRET = 'My Secret';
+const JWT_SECRET = process.env.JWT_SECRET
 
 router.get('/info', async function(req, res, next){
     try{

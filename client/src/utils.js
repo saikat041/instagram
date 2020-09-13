@@ -2,10 +2,14 @@
 
 // TODO: add more validation to it
 function validateSignupData(data){
-    const {name, email, password, confirmPassword} = data;
+    const {name, username, email, password, confirmPassword} = data;
 
     if (name.lengh === 0){
         return {error: "Name can't be empty"};
+    }
+
+    if (username.lengh === 0){
+        return {error: "Username can't be empty"};
     }
 
     if (email.lengh === 0){
@@ -23,9 +27,9 @@ function validateSignupData(data){
 }
 
 function validateSigninData(data){
-    const {email, password} = data;
+    const {username, password} = data;
 
-    if (email.lengh === 0){
+    if (username.lengh === 0){
         return {error:"Email can't be empty"};
     }
 
