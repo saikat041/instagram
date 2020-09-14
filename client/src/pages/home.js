@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// MUI stuffs
 import Grid from '@material-ui/core/Grid';
 import Navbar from '../components/Navbar'
 import Post from '../components/Post'
@@ -8,9 +9,6 @@ import Modal from '@material-ui/core/Modal';
 import CreatePost from '../components/CreatePost';
 
 const axios = require('axios');
-// mock data
-const { posts: posts_ } = require('../mockData')
-
 
 function Home(props) {
 
@@ -23,8 +21,8 @@ function Home(props) {
     if (!mounted) {
         setMounted(true)    
         axios.get('/api/posts')
-            .then(function (res) {
-                setPosts(posts_)
+            .then(function (response) {
+                setPosts(response.data.posts)
             })
             .catch(function (err) {
                 // catch unauthorized request error and redirect to login

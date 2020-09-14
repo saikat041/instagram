@@ -1,26 +1,9 @@
 // hard coded data to be fetched from server
 const posts = [{
-    id: "12345",
+    id: "123456789",
     userName: "saikat041",
-    user: {
-        userName: "saikat041",
-        profileImage: "/profile.JPG"
-    },
-    liked: true,
-    img: "test.JPG",
-    psotMessage: "This is my first post",
-    comments: [
-        {
-            id:"1",
-            userName: "sahil",
-            text: "Nice photo"
-        },
-        {
-            id: "2",
-            userName: "sahil",
-            text: "Nice photo"
-        }
-    ],
+    imageUrl: "https://cdn.pixabay.com/photo/2015/03/26/09/47/sky-690293__340.jpg",
+    caption: "This is my first post",
 }];
 
 module.exports = { posts }

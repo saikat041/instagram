@@ -77,8 +77,8 @@ export default function Post(props) {
     const classes = useStyles();
     const { post } = props;
 
-    const [liked, setLiked] = useState(post.liked);
-    const [comments, setComments] = useState(post.comments);
+    const [liked, setLiked] = useState(post.liked||false);
+    const [comments, setComments] = useState(post.comments||[]);
     const [newComment, setNewComment] = useState("");
 
     function handleLike() {
@@ -93,14 +93,14 @@ export default function Post(props) {
         <div className={classes.container}>
 
             <div className={classes.header}>
-                <Link to={`/${post.userName}`} className={classes.link}>
-                    <Avatar alt="Profile Image" src={post.user.profileImage} className={classes.avatar} />
+                <Link to={`/${post.username}`} className={classes.link}>
+                    <Avatar alt="Profile Image" src={post.profileImageUrl} className={classes.avatar} />
                 </Link>
-                <Link to={`/${post.user.userName}`} className={join(classes.userName, classes.link)}>{post.user.userName}</Link>
+                <Link to={`/${post.username}`} className={join(classes.userName, classes.link)}>{post.username}</Link>
             </div>
 
             <div>
-                <img alt="Post" src={post.img} className={classes.img} />
+                <img alt="Post" src={post.imageUrl} className={classes.img} />
             </div>
 
             <div style={{ padding: "12px 12px 0px 12px" }}>
@@ -120,9 +120,9 @@ export default function Post(props) {
                     others
                 </div>
 
-                {/* Post Message */}
+                {/* Caption */}
                 <div style={{ marginBottom: 7 }}>
-                    <span className={classes.bold}>{props.userName}</span> {post.caption}
+                    <span className={classes.bold}>{post.username}</span> {post.caption}
                 </div>
 
                 {/* Comments */}
